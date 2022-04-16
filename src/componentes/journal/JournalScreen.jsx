@@ -1,11 +1,14 @@
+import NoteScreen from "../notes/NoteScreen";
 import SideBar from "./SiderBar";
+// import NothingSelected from "./NothingSelected";
 
 const JournalScreen = () => {
   return (
     <div className="journal__main-content">
       <SideBar />
       <main>
-        <h1>Main content</h1>
+        {/* <NothingSelected /> */}
+        <NoteScreen />
       </main>
     </div>
   );
