@@ -1,7 +1,12 @@
+import SideBar from "./SiderBar";
+
 const JournalScreen = () => {
   return (
-    <div>
-      <h1>Journal Screen</h1>
+    <div className="journal__main-content">
+      <SideBar />
+      <main>
+        <h1>Main content</h1>
+      </main>
     </div>
   );
 };
