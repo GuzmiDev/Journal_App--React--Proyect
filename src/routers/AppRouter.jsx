@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { firebase } from "../firebase/firebase-config";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import JournalScreen from "../componentes/journal/JournalScreen";
 import AuthRouter from "./AuthRouter";
 import { useDispatch } from "react-redux";
 import { login } from "../actions/auth";
+import { PrivateRoute } from "./PrivateRoute";
+import { PublicRoute } from "./PublicRoute";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
@@ -35,9 +32,18 @@ const AppRouter = () => {
     <Router>
       <div>
         <Switch>
-          <Route path="/auth" component={AuthRouter} />
+          <PublicRoute
+            isAuthenticated={isLoggedIn}
+            path="/auth"
+            component={AuthRouter}
+          />
 
-          <Route exact path="/" component={JournalScreen} />
+          <PrivateRoute
+            exact
+            isAuthenticated={isLoggedIn}
+            path="/"
+            component={JournalScreen}
+          />
 
           <Redirect to="/auth/login" />
         </Switch>
