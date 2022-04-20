@@ -1,24 +1,37 @@
-const JournalEntrey = () => {
+import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
+import { activeNote } from "../../actions/notes";
+// advancedFormat permite usar la fecha ordinal entre otras opciones
+const advancedFormat = require("dayjs/plugin/advancedFormat");
+dayjs.extend(advancedFormat);
+
+const JournalEntrey = ({ id, date, title, body, url }) => {
+  const day = dayjs(date);
+  const dispatch = useDispatch();
+
+  const handleEntryClick = () => {
+    dispatch(activeNote(id, { date, title, body, url }));
+  };
+
   return (
-    <div className="journal__entry pointer">
-      <div
-        className="journal__entry-picture"
-        style={{
-          backgroundSize: "cover",
-          backgroundImage:
-            "url(https://laverdadnoticias.com/__export/1600893396254/sites/laverdad/img/2020/09/23/izuku_midoriya.jpg_684571543.jpg)",
-        }}
-      ></div>
+    <div className="journal__entry pointer" onClick={handleEntryClick}>
+      {url && (
+        <div
+          className="journal__entry-picture"
+          style={{
+            backgroundSize: "cover",
+            backgroundImage: `url(${url})`,
+          }}
+        ></div>
+      )}
 
       <div className="journal__entry-body">
-        <p className="journal__entry-title">Un nuevo día</p>
-        <p className="journal__entry-content">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-        </p>
+        <p className="journal__entry-title">{title}</p>
+        <p className="journal__entry-content">{body}</p>
       </div>
       <div className="journal__entry-data-box">
-        <span>Monday</span>
-        <h4>28</h4>
+        <span>{day.format("dddd")}</span>
+        <h4>{day.format("Do")}</h4>
       </div>
     </div>
   );
