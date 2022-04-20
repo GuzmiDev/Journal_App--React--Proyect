@@ -41,7 +41,10 @@ const LoginScreen = () => {
       <h3 className="auth__title mb-5">Login</h3>
       {msgError && <div className="auth__alert-error">{msgError}</div>}
 
-      <form onSubmit={handleLogin}>
+      <form
+        onSubmit={handleLogin}
+        className="animate__animated animate__fadeIn animate__faster"
+      >
         <input
           className="auth__input"
           type="text"
