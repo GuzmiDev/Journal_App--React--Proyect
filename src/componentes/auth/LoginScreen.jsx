@@ -20,7 +20,6 @@ const LoginScreen = () => {
     e.preventDefault();
     if (isFormValid()) {
       dispatch(startLoginEmailPassword(email, password));
-      console.log("ok?");
     }
   };
 
