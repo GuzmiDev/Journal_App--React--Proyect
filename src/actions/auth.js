@@ -2,11 +2,12 @@ import Swal from "sweetalert2";
 import { types } from "../types/types";
 import { firebase, googleAuthProvider } from "../firebase/firebase-config";
 import { finishLoading, startLoading } from "./ui";
+import { noteLogout } from "./notes";
 
 export const startLoginEmailPassword = (email, password) => {
   return (dispatch) => {
     dispatch(startLoading());
-    firebase
+    return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(({ user }) => {
@@ -18,14 +19,12 @@ export const startLoginEmailPassword = (email, password) => {
       .finally(() => {
         dispatch(finishLoading());
       });
-
-    // dispatch(login(123, "Fer"));
   };
 };
 
 export const startRegisterWithEmailPasswordName = (email, password, name) => {
   return (dispatch) => {
-    firebase
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(async ({ user }) => {
@@ -40,7 +39,7 @@ export const startRegisterWithEmailPasswordName = (email, password, name) => {
 
 export const startGoogleLogin = () => {
   return (dispatch) => {
-    firebase
+    return firebase
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(({ user }) => {
@@ -61,6 +60,7 @@ export const startLogout = () => {
   return async (dispatch) => {
     await firebase.auth().signOut();
     dispatch(logout());
+    dispatch(noteLogout());
   };
 };
 
