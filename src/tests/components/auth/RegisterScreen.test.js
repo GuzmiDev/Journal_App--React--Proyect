@@ -17,7 +17,7 @@ const initState = {
   auth: {},
   ui: {
     loading: false,
-    msg: null,
+    msgError: null,
   },
 };
 
@@ -57,5 +57,30 @@ describe("Pruebas en <RegisterScreen>", () => {
       type: types.uiSetError,
       payload: "Name is required",
     });
+  });
+
+  test("debe de mostar la caja de alerta con el error", () => {
+    const initState = {
+      auth: {},
+      ui: {
+        loading: false,
+        msgError: "Email  no es correcto",
+      },
+    };
+
+    const store = mockStore(initState);
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <RegisterScreen />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    expect(wrapper.find(".auth__alert-error").exists()).toBeTruthy();
+    expect(wrapper.find(".auth__alert-error").text().trim()).toBe(
+      initState.ui.msgError
+    );
   });
 });
